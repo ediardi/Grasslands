@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1232258168645643194}
   - component: {fileID: 7932425119518378012}
+  - component: {fileID: -5317057699128586669}
   m_Layer: 0
   m_Name: Turn controller
   m_TagString: Untagged
@@ -44,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdcb12550f4ad44bbf608b00f278f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playercount: 3
+  playercount: 2
   setupcount: 0
   currentplayer: 0
   templatetext: {fileID: 3408350518483633393, guid: 0ecbcd8f0ca37a343b47d228cfcccb54,
@@ -56,3 +57,20 @@ MonoBehaviour:
   playercolors: []
   scores: 
   scoretexts: []
+  callback: {fileID: 0}
+--- !u!114 &-5317057699128586669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232258168645643189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

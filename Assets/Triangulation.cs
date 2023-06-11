@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 public class Triangulation : MonoBehaviour
@@ -66,6 +67,10 @@ public class Triangulation : MonoBehaviour
         return false;
     }
 
+    public Meshcell getrefrencefromindex(int index)
+    {
+        return geocells[index].refr;
+    }
     private float falloff(Vector3 p)
     {
         if (origindistancesq(p) <= 1.5f*radiussq)
@@ -79,10 +84,15 @@ public class Triangulation : MonoBehaviour
     {
         return amplitude*(Mathf.PerlinNoise(p.x/scale,p.z/scale)-0.1f)*falloff(p);
     }
+
+    public void Startgame(ulong Id)
+    {
+        NetworkObject tempturnc = NetworkManager.Singleton.SpawnManager.SpawnedObjects[Id];
+        turnrefr = tempturnc.GetComponent<Turncontroller>();
+        turnrefr.callback = this;
+    }
     private void Awake()
     {
-        var tempturnc=Instantiate(turncontroller);
-        turnrefr = tempturnc.GetComponent<Turncontroller>();
 
 
         radius = size / 3;
