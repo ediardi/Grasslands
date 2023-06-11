@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1232258168645643189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1232258168645643194}
+  - component: {fileID: 7932425119518378012}
+  m_Layer: 0
+  m_Name: Turn controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1232258168645643194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232258168645643189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0539266, y: -0.98640966, z: -0.8170835}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7932425119518378012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232258168645643189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdcb12550f4ad44bbf608b00f278f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playercount: 3
+  setupcount: 0
+  currentplayer: 0
+  templatetext: {fileID: 3408350518483633393, guid: 0ecbcd8f0ca37a343b47d228cfcccb54,
+    type: 3}
+  Canvas: {fileID: 4132759665311326476, guid: 44ab8394c0d668c42a103972c4194468, type: 3}
+  pawn: {fileID: 1835049292480439196, guid: b928d8153c0a3ae4ab2e28ec08d421bd, type: 3}
+  playertiles: []
+  pawns: []
+  playercolors: []
+  scores: 
+  scoretexts: []
