@@ -28,6 +28,8 @@ public class Turncontroller : NetworkBehaviour
         playercolors.Add(Color.blue);
         playercolors.Add(Color.cyan);
         playercolors.Add(Color.magenta);
+        playercolors.Add(Color.green);
+        playercolors.Add(Color.gray);
         Canvas =Instantiate(Canvas);
     }
     public void invoke(Meshcell the)
@@ -52,6 +54,7 @@ public class Turncontroller : NetworkBehaviour
     {
         // note: `State.Value` will be equal to `current` here
         // changed int
+        if (current == -1) return;
         Debug.Log("i got here");
         Meshcell the = callback.getrefrencefromindex(current);
         if (setupcount < playercount)

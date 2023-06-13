@@ -85,22 +85,22 @@ public class Triangulation : MonoBehaviour
         return amplitude*(Mathf.PerlinNoise(p.x/scale,p.z/scale)-0.1f)*falloff(p);
     }
 
-    public void Startgame(ulong Id)
+    public void Setupgame(ulong Id,int playercount)
     {
         NetworkObject tempturnc = NetworkManager.Singleton.SpawnManager.SpawnedObjects[Id];
         turnrefr = tempturnc.GetComponent<Turncontroller>();
         turnrefr.callback = this;
+        turnrefr.playercount = playercount;
     }
-    private void Awake()
+
+    public void Createmap(int seed)
     {
-
-
         radius = size / 3;
 
-        Vector3 p0 = new Vector3(-size,0, -size);
-        Vector3 p1 = new Vector3(size,0,-size);
-        Vector3 p2 = new Vector3(size,0,size);
-        Vector3 p3 = new Vector3(-size,0, size);
+        Vector3 p0 = new Vector3(-size, 0, -size);
+        Vector3 p1 = new Vector3(size, 0, -size);
+        Vector3 p2 = new Vector3(size, 0, size);
+        Vector3 p3 = new Vector3(-size, 0, size);
 
         points.Add(p0);
         points.Add(p1);
@@ -120,21 +120,21 @@ public class Triangulation : MonoBehaviour
         uvmap.Add(new Vector2(1, 1));
         uvmap.Add(new Vector2(0, 1));
 
-        tria t1,t2;
-        t1 = new tria(0, 2, 1, p0, p2, p1,lasttr);
+        tria t1, t2;
+        t1 = new tria(0, 2, 1, p0, p2, p1, lasttr);
         triangles.Add(t1);
 
-        t2 = new tria(2, 0, 3, p2, p0, p3,lasttr);
+        t2 = new tria(2, 0, 3, p2, p0, p3, lasttr);
         triangles.Add(t2);
 
         int pointsin = 0;
         p = new Vector3(0, 0, 0);
         radiussq = radius * radius;
-        Random.InitState(42);
+        Random.InitState(seed);
         tria tr;
 
         int it;
-        while (pointsin<n)
+        while (pointsin < n)
         {
             p.x = Random.Range(-size, size);
             p.z = Random.Range(-size, size);
@@ -142,32 +142,32 @@ public class Triangulation : MonoBehaviour
             points.Add(p);
             geocells.Add(new Geometrycell());
             lasttr.Add(null);
-            uvmap.Add(new Vector2((p.x+size)/size/2, (p.z + size) / size / 2));
+            uvmap.Add(new Vector2((p.x + size) / size / 2, (p.z + size) / size / 2));
 
-            for(it=0;it<triangles.Count;it++)
+            for (it = 0; it < triangles.Count; it++)
             {
                 if (incircumcircle(p, it))
                 {
-                    tr=triangles[it];
+                    tr = triangles[it];
                     tr.addedges(edges);
                     triangles.RemoveAt(it);
                     it--;
                 }
             }
 
-            foreach(edge e in edges)
+            foreach (edge e in edges)
             {
                 triangles.Add(new tria(e.a, e.b, points.Count - 1, points[e.a], points[e.b], p, lasttr));
             }
             edges.Clear();
 
 
-            if (origindistancesq(p)<radiussq)
+            if (origindistancesq(p) < radiussq)
             {
                 pointsin++;
             }
         }
-        foreach(tria trr in triangles)
+        foreach (tria trr in triangles)
         {
             alledges.Add(trr.edge1);
             alledges.Add(trr.edge2);
@@ -180,29 +180,29 @@ public class Triangulation : MonoBehaviour
         {
             makecell(i);
             //geocellls[i]
-            if(!issand(i))
+            if (!issand(i))
             {
                 last = i;
             }
             else
             {
-                maketile(false,i);
+                maketile(false, i);
             }
         }
         it = 0;
         queue.Add(last);
         geocells[last].visited = true;
 
-        while(it<queue.Count)
+        while (it < queue.Count)
         {
             i = queue[it];
             var current = geocells[i];
-            foreach(int ii in current.neighbours)
+            foreach (int ii in current.neighbours)
             {
-                if(!issand(ii))
+                if (!issand(ii))
                 {
                     current.validneighbours.Add(ii);
-                    if (geocells[ii].visited==false)
+                    if (geocells[ii].visited == false)
                     {
                         geocells[ii].visited = true;
                         queue.Add(ii);
@@ -212,7 +212,10 @@ public class Triangulation : MonoBehaviour
             it++;
         }
         StartCoroutine(buildboard());
-        
+    }
+    private void Awake()
+    {
+
     }
 
     void generateuv()
