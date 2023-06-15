@@ -6,10 +6,11 @@ namespace CameraControl
     {
         [SerializeField] private float _speed = 25f;
         [SerializeField] private float _smoothing = 5f;
-        [SerializeField] private Vector2 _range = new(30f, 70f);
+        [SerializeField] private Vector2 _range = new(-30f, 70f);
         [SerializeField] private Transform _cameraHolder;
 
-        private Vector3 _cameraDirection => transform.InverseTransformDirection(_cameraHolder.forward);
+        private Vector3 _cameraDirection = Vector3.forward;
+        //transform.InverseTransformDirection(_cameraHolder.forward);
 
         private Vector3 _targetPosition;
         private float _input;
@@ -34,7 +35,7 @@ namespace CameraControl
 
         private bool IsInBounds(Vector3 position)
         {
-            return position.magnitude > _range.x && position.magnitude < _range.y;
+            return position.z > _range.x && position.z < _range.y;
         }
 
         private void Update()
