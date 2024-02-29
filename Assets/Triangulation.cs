@@ -21,7 +21,7 @@ public class Triangulation : MonoBehaviour
     private GameObject cell;
     private HashSet<edge> edges = new HashSet<edge>();
     private HashSet<edge> alledges = new HashSet<edge>();
-
+    private float ofsetx,ofsety;
     private Turncontroller turnrefr;
 
     private Mesh mesh;
@@ -74,15 +74,33 @@ public class Triangulation : MonoBehaviour
     private float falloff(Vector3 p)
     {
         if (origindistancesq(p) <= 1.5f*radiussq)
-            return 1.0f;
-        if (origindistancesq(p) >= 5 * radiussq)
-            return -0.1f;
-        return 1.0f- Mathf.Sqrt(origindistancesq(p) - 1.5f*radiussq)*0.04f;
+            return 0;
+        if (origindistancesq(p) >= 7 * radiussq)
+            return 1.1f;
+        return Mathf.Sqrt(origindistancesq(p) - 1.5f*radiussq)*0.01f;
     }
 
+    private List<Vector3> tempdebugpoints = new List<Vector3>();
+    private void OnDrawGizmos()
+    {
+        foreach (Vector3 temppoint in tempdebugpoints)
+        {
+            Gizmos.color = UnityEngine.Color.yellow;
+            Gizmos.DrawSphere(temppoint, 1);
+        }
+    }
     private float calc_height(Vector3 p)
     {
-        return amplitude*(Mathf.PerlinNoise(p.x/scale,p.z/scale)-0.1f)*falloff(p);
+        
+        float nx = 1f * p.x / size ;
+        float ny = 1f * p.z / size ;
+        nx = Mathf.Clamp(nx, -1f, 1f);
+        ny = Mathf.Clamp(ny, -1f, 1f);
+        float d = amplitude*(1 - nx * nx) * (1 - ny * ny)/2 - 5f;
+        tempdebugpoints.Add(new Vector3(p.x,d,p.z));
+        //return amplitude*((Mathf.PerlinNoise(p.x/scale+ofsetx,p.z/scale+ofsety)-0.35f)-falloff(p));
+        return d;
+
     }
 
     public void Setupgame(ulong Id,int playercount)
@@ -131,6 +149,8 @@ public class Triangulation : MonoBehaviour
         p = new Vector3(0, 0, 0);
         radiussq = radius * radius;
         Random.InitState(seed);
+        ofsetx = Random.Range(-1000,1000);
+        ofsety = Random.Range(-1000, 1000);
         tria tr;
 
         int it;
@@ -310,12 +330,18 @@ public class Triangulation : MonoBehaviour
 
     bool issand(int i)
     {
-        foreach (var ps in geocells[i].cellpoints)
+        try
         {
-            if (ps.y + geocells[i].pos.y < 0.4f)
-                return true;
+            foreach (var ps in geocells[i].cellpoints)
+            {
+                if (ps.y + geocells[i].pos.y < 0f)
+                    return true;
+            }
+            return false;
         }
-        return false;
+        catch { 
+            return false; 
+        }
     }
     void makecell(int i)
     {

@@ -1494,8 +1494,8 @@ MonoBehaviour:
   n: 35
   meshcell: {fileID: 3794344290382413168, guid: 6be5dcdb57f9fda48b5661837e0bbe74,
     type: 3}
-  scale: 20
-  amplitude: 10
+  scale: 60
+  amplitude: 45
   turncontroller: {fileID: 1232258168645643189, guid: e374b4daa546e954d8e1a802edcb04ef,
     type: 3}
 --- !u!4 &1016698848
@@ -2269,7 +2269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1580139267
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2342,7 +2342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580139266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1000, y: 1000, z: 1000}
   m_ConstrainProportionsScale: 1
   m_Children: []
