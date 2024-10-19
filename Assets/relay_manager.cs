@@ -16,6 +16,7 @@ public class relay_manager : MonoBehaviour
     [SerializeField] private TMP_Text _joinCodeText;
     [SerializeField] private TMP_InputField _joinInput;
     [SerializeField] private GameObject _buttons;
+    [SerializeField] private TMP_Text confirmation;
 
     private UnityTransport _transport;
     private const int MaxPlayers = 5;
@@ -58,5 +59,7 @@ public class relay_manager : MonoBehaviour
         _transport.SetRelayServerData(new RelayServerData(a, "wss"));
 
         NetworkManager.Singleton.StartClient();
+
+        confirmation.text = "Connected";
     }
 }

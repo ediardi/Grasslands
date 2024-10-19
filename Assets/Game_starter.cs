@@ -11,6 +11,7 @@ public class Game_starter : NetworkBehaviour
     [SerializeField] private GameObject Base_mesh;
     [SerializeField] private GameObject Turncontrollerprefab;
     [SerializeField] private TMP_InputField _seedInput;
+    [SerializeField] private GameObject conection_text;
     GameObject Turncontroller;
 
     [ClientRpc]
@@ -21,6 +22,7 @@ public class Game_starter : NetworkBehaviour
         Base_mesh.GetComponent<Triangulation>().Setupgame(Id, playercount);
         Base_mesh.GetComponent<Triangulation>().Createmap(seed);
         //Turncontroller.GetComponent<Turncontroller>().callback = Base_mesh.GetComponent<Triangulation>();
+        conection_text.SetActive(false);
     }
 
     public void Startgame()

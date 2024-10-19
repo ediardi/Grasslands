@@ -96,11 +96,33 @@ public class Triangulation : MonoBehaviour
         float ny = 1f * p.z / size ;
         nx = Mathf.Clamp(nx, -1f, 1f);
         ny = Mathf.Clamp(ny, -1f, 1f);
-        float d = amplitude*(1 - nx * nx) * (1 - ny * ny)/2 - 5f;
+        float d = amplitude*(1 - nx * nx) * (1 - ny * ny)/2 - 5f - new_falloff(p);
         tempdebugpoints.Add(new Vector3(p.x,d,p.z));
         //return amplitude*((Mathf.PerlinNoise(p.x/scale+ofsetx,p.z/scale+ofsety)-0.35f)-falloff(p));
         return d;
 
+    }
+
+    private float new_falloff(Vector3 p)
+    {
+        float fall = 0f;
+        if(p.x>size)
+        {
+            fall+=10*p.x/size;
+        }
+        if(p.z>size)
+        {
+            fall+=10*p.z/size;
+        }
+        if (-p.x > size)
+        {
+            fall += 10 * (-p.x) / size;
+        }
+        if (-p.z > size)
+        {
+            fall += 10 * (-p.z) / size;
+        }
+        return fall;
     }
 
     public void Setupgame(ulong Id,int playercount)
